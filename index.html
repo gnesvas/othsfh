@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#090a12" />
+  <title>تنبيه — افتح في المتصفح</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#090a12;
+      --neb1:#16132a;
+      --neb2:#0d1022;
+      --pink:#ff74da;
+      --pink2:#ffb2ef;
+      --text:#ffffff;
+      --muted:#d8dbff;
+      --gold1:#fff1b8;
+      --gold2:#ffd36a;
+      --gold3:#ffb83d;
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); font-family:"Tajawal",system-ui,Segoe UI,Arial;
+      background:
+        radial-gradient(1200px 700px at 90% -10%, rgba(255,116,218,.16), transparent 55%),
+        radial-gradient(1000px 600px at 8% 110%, rgba(255,178,239,.12), transparent 60%),
+        radial-gradient(1400px 900px at -10% 15%, var(--neb1), transparent 60%),
+        radial-gradient(1600px 1000px at 110% 85%, var(--neb2), transparent 65%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* نجوم وردية — بدون صور خارجية */
+    .stars, .stars2, .stars3{
+      position:fixed; inset:-10vh -10vw; z-index:0; pointer-events:none;
+      animation: drift linear infinite;
+    }
+    .stars{
+      background:
+        radial-gradient(1.8px 1.8px at 12% 22%, rgba(255,116,218,.95), transparent 50%),
+        radial-gradient(1.6px 1.6px at 32% 76%, rgba(255,178,239,.9), transparent 50%),
+        radial-gradient(2px 2px at 64% 18%, rgba(255,116,218,.95), transparent 50%),
+        radial-gradient(1.4px 1.4px at 82% 64%, rgba(255,178,239,.85), transparent 50%),
+        radial-gradient(1.6px 1.6px at 92% 36%, rgba(255,116,218,.9), transparent 50%),
+        radial-gradient(1.3px 1.3px at 44% 90%, rgba(255,178,239,.85), transparent 50%);
+      background-size: 600px 600px, 700px 700px, 800px 800px, 620px 620px, 780px 780px, 640px 640px;
+      opacity:.9; animation-duration:160s; filter:drop-shadow(0 0 4px rgba(255,116,218,.23));
+    }
+    .stars2{
+      background:
+        radial-gradient(1.4px 1.4px at 18% 54%, rgba(255,178,239,.8), transparent 50%),
+        radial-gradient(1.2px 1.2px at 58% 12%, rgba(255,116,218,.75), transparent 50%),
+        radial-gradient(1.3px 1.3px at 74% 48%, rgba(255,178,239,.75), transparent 50%),
+        radial-gradient(1.1px 1.1px at 6% 82%, rgba(255,116,218,.7), transparent 50%);
+      background-size: 680px 680px, 760px 760px, 720px 720px, 700px 700px;
+      opacity:.6; animation-duration:220s; filter:blur(.4px);
+    }
+    .stars3{
+      background:
+        radial-gradient(1.1px 1.1px at 26% 26%, rgba(255,116,218,.7), transparent 50%),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,178,239,.65), transparent 50%),
+        radial-gradient(1px 1px at 48% 92%, rgba(255,116,218,.6), transparent 50%);
+      background-size: 820px 820px, 900px 900px, 860px 860px;
+      opacity:.45; animation-duration:280s; filter:blur(1px);
+    }
+    @keyframes drift { from{ transform:translate3d(0,0,0) } to{ transform:translate3d(-220px,-140px,0) } }
+
+    .wrap{
+      position:relative; z-index:2; min-height:100dvh;
+      display:flex; align-items:center; justify-content:center;
+      padding: clamp(16px, 3vw, 32px);
+    }
+    .panel{
+      width:min(980px, 95vw);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: clamp(14px, 2.2vw, 22px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.45), 0 0 60px rgba(255,116,218,.09);
+      padding: clamp(16px, 3vw, 28px);
+      text-align:center;
+      position:relative;
+    }
+
+    /* سهم متوهّج نحو الزاوية العلوية اليسرى */
+    .arrow{
+      position:absolute; top:8px; left:10px; width:min(28vw,120px); height:auto;
+      filter: drop-shadow(0 4px 10px rgba(255,116,218,.35));
+      animation: bob 2.2s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes bob { 0%,100%{ transform:translate(0,0) } 50%{ transform:translate(-3px,3px) } }
+
+    .title{
+      font-weight:900;
+      font-size: clamp(20px, 5vw, 36px);
+      line-height:1.6;
+      margin: 8px 0 18px;
+      letter-spacing:.2px;
+      background: linear-gradient(90deg, #ffffff, #ffe7f9 30%, #ffc5f1 60%, #ffffff);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hint{ color:var(--muted); font-size:clamp(12px, 2.8vw, 14px); margin:-4px 0 20px; opacity:.92; }
+
+    /* زر ذهبي براق */
+    .cta{
+      --h: clamp(48px, 8.5vw, 64px);
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      height: var(--h); width:min(520px, 92%);
+      padding: 0 clamp(18px, 4vw, 26px);
+      border-radius: calc(var(--h) / 2);
+      font-weight:900; font-size: clamp(15px, 3.8vw, 19px);
+      color:#2a1800; text-decoration:none;
+      background: linear-gradient(180deg, var(--gold1), var(--gold2) 55%, var(--gold3));
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow:
+        0 10px 28px rgba(0,0,0,.35),
+        0 10px 26px rgba(255,184,60,.25),
+        inset 0 1px 0 rgba(255,255,255,.85);
+      position:relative; overflow:hidden; will-change:transform, filter;
+      transition: transform .18s ease, box-shadow .22s ease, filter .22s ease;
+    }
+    .cta:hover{
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 14px 38px rgba(0,0,0,.45),
+        0 14px 34px rgba(255,184,60,.32),
+        inset 0 1px 0 rgba(255,255,255,.9);
+      filter:saturate(1.06);
+    }
+    .cta:active{ transform: translateY(0) scale(.99) }
+    /* لمعان عابر */
+    .cta::before{
+      content:""; position:absolute; inset:-150% -30% auto -30%; height:300%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+      transform: rotate(12deg);
+      animation: shine 2.4s ease-in-out infinite;
+      opacity:.8;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-60%) rotate(12deg) }
+      45% { transform: translateX(120%) rotate(12deg) }
+      100%{ transform: translateX(120%) rotate(12deg) }
+    }
+    /* توهج نبضي حول الزر */
+    .cta::after{
+      content:""; position:absolute; inset:-6px; border-radius:inherit; z-index:-1;
+      box-shadow: 0 0 0 0 rgba(255, 188, 70, .28);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,188,70,.26); }
+      70%  { box-shadow: 0 0 0 18px rgba(255,188,70,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,188,70,0); }
+    }
+
+    /* تحسين اللمس */
+    @media (hover:none){ .cta:hover{ transform:none; } }
+  </style>
+</head>
+<body>
+
+  <!-- طبقات النجوم -->
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <main class="wrap">
+    <section class="panel" aria-label="تعليمات">
+      <!-- سهم نحو الزاوية العلوية اليسرى -->
+      <svg class="arrow" viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ffb2ef"/>
+            <stop offset="100%" stop-color="#ff74da"/>
+          </linearGradient>
+        </defs>
+        <!-- مسار منحني يشير للأعلى يسار -->
+        <path d="M190,40 C120,50 90,42 62,30" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/>
+        <polyline points="68,22 60,30 70,36" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      <h1 class="title">
+        تنبيه ⚠️  الرابط ما راح يشتغل إلا إذا! ضغطت على الثلاثة نقاط في زواية الشاشة فوق بعدها الضغط على خيار فتح في المتصفح.<br>
+        وبعدها بيطلعك من التيك واضغط الزر اللي تحت
+      </h1>
+      <p class="hint">اتبع الخطوات أولاً، بعدها اضغط الزر الذهبي 👇</p>
+
+      <a class="cta" href="https://gnesvas.github.io/choose/" target="_blank" rel="noopener">اضغط هنا عند عمل الخطوات</a>
+    </section>
+  </main>
+</body>
+</html>
